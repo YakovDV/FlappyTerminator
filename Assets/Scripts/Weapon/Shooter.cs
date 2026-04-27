@@ -15,7 +15,12 @@ public class Shooter : MonoBehaviour
         _canShoot = true;
     }
 
-    public void TryShoot()
+    public void SetBulletPool(BulletPool pool)
+    {
+        _bulletPool = pool;
+    }
+
+    public void TryShootWithCooldown()
     {
         if (_canShoot == false)
         {
@@ -33,9 +38,8 @@ public class Shooter : MonoBehaviour
         }
     }
 
-    private IEnumerator ShootWithCooldown()
+    public void Shoot()
     {
-        _canShoot = false;
         Bullet bullet = _bulletPool.GetObject();
 
         bullet.transform.position = transform.position;
@@ -43,6 +47,12 @@ public class Shooter : MonoBehaviour
         bullet.ReadyToReturn += ReturnBullet;
         bullet.Move(transform.right);
         bullet.SetOwner(_owner);
+    }
+
+    private IEnumerator ShootWithCooldown()
+    {
+        _canShoot = false;
+        Shoot();
 
         yield return new WaitForSeconds(_cooldown);
 

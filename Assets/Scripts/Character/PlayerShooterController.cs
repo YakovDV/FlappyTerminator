@@ -15,11 +15,11 @@ public class PlayerShooterController : MonoBehaviour
 
     private void OnEnable()
     {
-        _playerInput.AttackPressed += _shooter.TryShoot;
+        _playerInput.AttackPressed += _shooter.TryShootWithCooldown;
     }
 
     private void OnDisable()
     {
-        _playerInput.AttackPressed -= _shooter.TryShoot;
+        _playerInput.AttackPressed -= _shooter.TryShootWithCooldown;
     }
 }

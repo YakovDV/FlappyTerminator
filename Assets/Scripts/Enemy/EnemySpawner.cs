@@ -6,11 +6,12 @@ public class EnemySpawner : MonoBehaviour
 {
     [SerializeField] private EnemyPool _enemyPool;
     [SerializeField] private Transform _origin;
+    [SerializeField] private BulletPool _bulletPool;
     [SerializeField] private float _delay;
     [SerializeField] private float _minY = -3f;
     [SerializeField] private float _maxY = 3f;
 
-    public event Action OnShotByPlayer;
+    public event Action EnemyKilledByPlayer;
 
     private IEnumerator Start()
     {
@@ -20,19 +21,14 @@ public class EnemySpawner : MonoBehaviour
         {
             Enemy enemy = _enemyPool.GetObject();
             enemy.transform.position = CalculateSpawnPoint();
-            enemy.ReadyToReturn += ReturnEnemy;
-            enemy.ShotByPlayer += HandleShotByPlayer;
+            SetEnemyBulletPool(enemy);
+            enemy.Died += ReturnEnemy;
+            enemy.KilledByPlayer += OnEnemyKilledByPlayer;
 
             enemy.Move(Vector2.left);
 
             yield return delay;
         }
-    }
-
-    private void HandleShotByPlayer(Enemy enemy)
-    {
-        enemy.ShotByPlayer -= HandleShotByPlayer;
-        OnShotByPlayer?.Invoke();
     }
 
     private Vector2 CalculateSpawnPoint()
@@ -41,11 +37,26 @@ public class EnemySpawner : MonoBehaviour
         return new Vector2(_origin.position.x, yPosition);
     }
 
+    private void SetEnemyBulletPool(Enemy enemy)
+    {
+        Shooter shooter = enemy.GetComponentInChildren<Shooter>();
+
+        if(shooter != null)
+        {
+            shooter.SetBulletPool(_bulletPool);
+        }
+    }
+
     private void ReturnEnemy(Enemy enemy)
     {
-        enemy.ReadyToReturn -= ReturnEnemy;
-        enemy.ShotByPlayer -= HandleShotByPlayer;
+        enemy.Died -= ReturnEnemy;
+        enemy.KilledByPlayer -= OnEnemyKilledByPlayer;
 
         _enemyPool.ReleaseObject(enemy);
+    }
+
+    private void OnEnemyKilledByPlayer()
+    {
+        EnemyKilledByPlayer?.Invoke();
     }
 }

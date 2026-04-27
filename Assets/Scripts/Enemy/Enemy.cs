@@ -1,27 +1,34 @@
 using System;
 using UnityEngine;
 
-[RequireComponent(typeof(Collider2D), typeof(Renderer), typeof(Rigidbody2D))]
+[RequireComponent(typeof(Rigidbody2D))]
 
-public class Bullet : MonoBehaviour
+public class Enemy : MonoBehaviour
 {
     [SerializeField] private float _speed;
 
     private Rigidbody2D _rigidbody;
 
-    public event Action<Bullet> ReadyToReturn;
-
-    public BulletOwner Owner { get; private set; }
+    public event Action<Enemy> Died;
+    public event Action KilledByPlayer;
 
     private void Awake()
     {
-        GetComponent<Collider2D>().isTrigger = true;
         _rigidbody = GetComponent<Rigidbody2D>();
     }
 
-    private void OnTriggerEnter2D(Collider2D collision)
+    public void HandleBulletHit(BulletOwner bulletOwner)
     {
-        ReadyToReturn?.Invoke(this);
+        if (bulletOwner == BulletOwner.Player)
+        {
+            KilledByPlayer?.Invoke();
+            RequestDespawn();
+        }
+    }
+
+    public void RequestDespawn()
+    {
+        Died?.Invoke(this);
     }
 
     public void Move(Vector2 direction)
@@ -30,11 +37,6 @@ public class Bullet : MonoBehaviour
         _rigidbody.velocity = direction * _speed;
 
         Rotate(direction);
-    }
-
-    public void SetOwner(BulletOwner owner)
-    {
-        Owner = owner;
     }
 
     private void Rotate(Vector2 direction)

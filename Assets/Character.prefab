@@ -38,7 +38,6 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 6696601402046586763}
   - {fileID: 1929633190622675920}
   - {fileID: 5761160027746912872}
   - {fileID: 4236169968407057264}
@@ -224,6 +223,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _characterCollisionDetector: {fileID: 0}
+  _startPosition: {fileID: 0}
 --- !u!114 &8025278348209022152
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,53 +236,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 4c2af3ecea403d54e88dbc64f4f8ce2e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!1 &3677633099474621272
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 6696601402046586763}
-  - component: {fileID: 4951149420165821047}
-  m_Layer: 0
-  m_Name: BulletPool
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &6696601402046586763
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3677633099474621272}
-  serializedVersion: 2
-  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 7.2693815, y: 1.8602208, z: 0.11135485}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8306596413997277940}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &4951149420165821047
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3677633099474621272}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9dd62e0a6c53fe8418c032e7deab3044, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  _prefab: {fileID: 6555046911125365007, guid: 96acb13ebecc25d478fa5715fb1cf4b0, type: 3}
-  _poolCapacity: 120
-  _poolMaxSize: 120
 --- !u!1 &5187043588598304143
 GameObject:
   m_ObjectHideFlags: 0

@@ -11,6 +11,7 @@ public class CharacterMover : MonoBehaviour
     private Rigidbody2D _rigidbody;
     private PlayerInput _playerInput;
     private Jumper _jumper;
+    private Character _character;
 
     private Vector3 _startPosition;
     private Quaternion _minRotation;
@@ -21,6 +22,7 @@ public class CharacterMover : MonoBehaviour
         _rigidbody = GetComponent<Rigidbody2D>();
         _playerInput = GetComponent<PlayerInput>();
         _jumper = GetComponent<Jumper>();
+        _character = GetComponent<Character>();
     }
 
     private void Start()
@@ -34,6 +36,7 @@ public class CharacterMover : MonoBehaviour
     private void OnEnable()
     {
         _playerInput.JumpPressed += OnJumpPressed;
+        _character.Died += StopMoving;
     }
 
     private void Update()
@@ -46,6 +49,7 @@ public class CharacterMover : MonoBehaviour
     private void OnDisable()
     {
         _playerInput.JumpPressed -= OnJumpPressed;
+        _character.Died -= StopMoving;
     }
 
     private void OnJumpPressed()
@@ -60,5 +64,10 @@ public class CharacterMover : MonoBehaviour
         Vector3 position = new(_startPosition.x, transform.position.y, _startPosition.z);
 
         transform.position = position;
+    }
+
+    private void StopMoving()
+    {
+        _rigidbody.velocity = Vector3.zero;
     }
 }

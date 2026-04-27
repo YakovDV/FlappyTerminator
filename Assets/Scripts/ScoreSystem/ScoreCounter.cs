@@ -12,17 +12,18 @@ public class ScoreCounter : MonoBehaviour
     private void OnEnable()
     {
         ResetScore();
-        _enemySpawner.OnShotByPlayer += AddScore;
+        _enemySpawner.EnemyKilledByPlayer += AddScore;
     }
 
     private void OnDisable()
     {
-        _enemySpawner.OnShotByPlayer -= AddScore;
+        _enemySpawner.EnemyKilledByPlayer -= AddScore;
     }
 
     public void ResetScore()
     {
         _score = 0;
+        ValueChanged?.Invoke(_score);
     }
 
     private void AddScore()

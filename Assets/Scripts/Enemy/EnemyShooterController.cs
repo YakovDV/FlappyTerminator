@@ -29,7 +29,7 @@ public class EnemyShooterController : MonoBehaviour
         while (true)
         {
             yield return delay;
-            _shooter.TryShoot();
+            _shooter.Shoot();
         }
     }
 }
